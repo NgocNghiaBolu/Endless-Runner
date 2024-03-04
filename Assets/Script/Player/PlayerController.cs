@@ -20,16 +20,24 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
 
     public float score = 0;
+    public int currentTime;
+    public float initialTime = 0;
+
 
     public bool boost = false;
     public Rigidbody rbody;
     public CapsuleCollider myCollider;
 
     public bool death = false;
-    //public Image gameOverImg;
+    public Image gameOverImg;
     public Text scoreText;
     public Text bestScoreText;
     public float lastScore;
+
+    public Text timeText;
+    public Text timeUIText;
+
+    public GameObject PauseOB;
 
     public float moveSpeed = 5f;
     public float jumpForce = 1f;
@@ -37,15 +45,33 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody>();
         myCollider = GetComponent<CapsuleCollider>();
+        initialTime = Time.time;
 
+        lastScore = PlayerPrefs.GetFloat("MyScore");
         moveSpeed = 5f;
+
+        timeUIText = GameObject.Find("TimeUIText").GetComponent<Text>();
     }
 
-    // Update is called once per frame
+    void Update()
+    {
+        if (!death)
+        {
+            currentTime = Mathf.FloorToInt(Time.time - initialTime);
+            UpdateTimeText();
+        }
+
+    }
+
+    void UpdateTimeText()
+    {
+        timeText.text = "Time: " + currentTime.ToString() + "s";
+    }
+
     void FixedUpdate()
     {
         //foreach (Touch t in Input.touches)
@@ -98,19 +124,17 @@ public class PlayerController : MonoBehaviour
 
         scoreText.text = "Score: " + score.ToString();
 
+
         if (score > lastScore)
         {
             bestScoreText.text = "Best Score : " + score.ToString();
         }
         else
         {
-            bestScoreText.text = "Your Score : " + score.ToString();
+            bestScoreText.text = "Your Score  " + score.ToString();
         }
 
-        //if (death == true)
-        //{
-        //    gameOverImg.gameObject.SetActive(true);
-        //}
+       
 
         // player controll start
         if (score >= 100 && death != true)
@@ -171,7 +195,7 @@ public class PlayerController : MonoBehaviour
         }
 
         float horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * horizontalInput * moveSpeed * Time.deltaTime);
+        transform.Translate(Vector3.right * horizontalInput * moveSpeed * UnityEngine.Time.deltaTime);
 
         // Player Control End
 
@@ -215,16 +239,6 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(BoostController());
         }
 
-        //if (other.gameObject.tag == "Enemy")
-        //{
-        //    death = true;
-        //    if (score > lastScore)
-        //    {
-        //        PlayerPrefs.SetFloat("MyScore", score);
-        //        PlayerPrefs.Save();
-        //    }   
-        //}
-
     }
 
     void OnCollisionEnter(Collision collision)
@@ -233,19 +247,30 @@ public class PlayerController : MonoBehaviour
         {
             death = true;
             anim.SetTrigger("Die");
-            StartCoroutine(LoadNextSceneAfterDelay(2f, "RePlay"));
+            StartCoroutine(LoadNextSceneAfterDelay(1.8f, "RePlay"));
+
+
             if (score > lastScore)
             {
                 PlayerPrefs.SetFloat("MyScore", score);
                 PlayerPrefs.Save();
-            } 
+            }
+            initialTime = Time.time;
         }
     }
 
     IEnumerator LoadNextSceneAfterDelay(float delay, string sceneName)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(sceneName);
+        if (death == true)
+        {
+            gameOverImg.gameObject.SetActive(true);
+            PauseOB.gameObject.SetActive(false);
+            timeText.gameObject.SetActive(false);
+
+            timeUIText.text = "Duration  " + currentTime.ToString() + "s";
+        }
+
     }
 
 

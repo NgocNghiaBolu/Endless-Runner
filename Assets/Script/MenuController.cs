@@ -11,14 +11,16 @@ public class MenuController : MonoBehaviour {
 	public Image CreditImage;
 	public Image VolumeImage;
 	public Text scoreText;
+	//public Text scoreOut;
+	public Text timeText;
 
 	public AudioSource myAudio;
 	public Slider volumeSlider;
 
 	public float bestScore;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		myAudio = GetComponent<AudioSource> ();
 	}
 	

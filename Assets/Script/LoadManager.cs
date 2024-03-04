@@ -36,14 +36,14 @@ public class LoadManager : MonoBehaviour
         if (isPaused == true)
         {
             pause.SetActive(false);
-            Time.timeScale = 0;
+            UnityEngine.Time.timeScale = 0;
             resume.SetActive(true);
             quit.SetActive(true);
         }
         else
         {
             pause.SetActive(true);
-            Time.timeScale = 1;
+            UnityEngine.Time.timeScale = 1;
             pause.SetActive(true);
             resume.SetActive(false);
             quit.SetActive(false);

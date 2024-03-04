@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, _player.position) <= distance)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - speed * Time.deltaTime);
+                transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - speed * UnityEngine.Time.deltaTime);
             }
         }
     }
