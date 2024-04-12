@@ -49,12 +49,13 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody>();
         myCollider = GetComponent<CapsuleCollider>();
+
         initialTime = Time.time;
 
         lastScore = PlayerPrefs.GetFloat("MyScore");
         moveSpeed = 5f;
 
-        timeUIText = GameObject.Find("TimeUIText").GetComponent<Text>();
+        //timeUIText = GameObject.Find("TimeUIText").GetComponent<Text>();
     }
 
     void Update()
@@ -224,13 +225,13 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(other.gameObject, 0.5f);
             score += 5f;
-            Debug.Log(score);
+            //Debug.Log(score);
         }
         if (other.gameObject.tag == "CoinBlue")
         {
             Destroy(other.gameObject, 0.5f);
             score += 3f;
-            Debug.Log(score);
+           // Debug.Log(score);
         }
 
         if (other.gameObject.tag == "Boost")
@@ -268,11 +269,10 @@ public class PlayerController : MonoBehaviour
             PauseOB.gameObject.SetActive(false);
             timeText.gameObject.SetActive(false);
 
-            timeUIText.text = "Duration  " + currentTime.ToString() + "s";
+            timeUIText.text = "Duration  " + currentTime.ToString() + " s";
         }
 
     }
-
 
     IEnumerator BoostController()
     {
@@ -293,7 +293,7 @@ public class PlayerController : MonoBehaviour
     {
         slide = true;
         myCollider.height = 1.8f;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.7f);
         slide = false;
         myCollider.height = 2.05f;
     }
