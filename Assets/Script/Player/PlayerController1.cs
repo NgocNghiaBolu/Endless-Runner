@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController1: MonoBehaviour
 {
 
     //private Touch initialTouch = new Touch();
@@ -135,12 +135,12 @@ public class PlayerController : MonoBehaviour
             bestScoreText.text = "Your Score  " + score.ToString();
         }
 
-       
-
         // player controll start
         if (score >= 100 && death != true)
         {
             transform.Translate(0, 0, 0.2f);
+            StartCoroutine(Fisnish());
+
         }
         else if (score >= 200 && death != true)
         {
@@ -149,7 +149,6 @@ public class PlayerController : MonoBehaviour
         else if (score >= 400 && death != true)
         {
             transform.Translate(0, 0, 0.4f);
-            StartCoroutine(Fisnish());
         }
         else if (death == true)
         {
@@ -258,6 +257,7 @@ public class PlayerController : MonoBehaviour
             }
             initialTime = Time.time;
         }
+
     }
 
     IEnumerator LoadNextSceneAfterDelay(float delay, string sceneName)
@@ -275,8 +275,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Fisnish()
     {
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("Win");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("Compleate1");
     }
 
     IEnumerator BoostController()

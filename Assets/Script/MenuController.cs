@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour {
 
-	public Image SettingImage;
+    public Image SettingImage;
 	public Image BestScoreImage;
 	public Image CreditImage;
 	public Image VolumeImage;
@@ -32,37 +32,38 @@ public class MenuController : MonoBehaviour {
 		myAudio.volume = volumeSlider.value;
 	}
 
+	
 	public void Setting(){
 		SettingImage.gameObject.SetActive (true);
-	}
+    }
 
 	public void Exit(){
 		SettingImage.gameObject.SetActive (false);
-	}
+    }
 
 	public void BestScore(){
 		BestScoreImage.gameObject.SetActive (true);
-	}
+    }
 
 	public void ExitBestScore(){
 		BestScoreImage.gameObject.SetActive (false);
-	}
+    }
 
 	public void Credit(){
 		CreditImage.gameObject.SetActive (true);
-	}
+    }
 
 	public void Volume(){
 		VolumeImage.gameObject.SetActive (true);
-	}
+    }
 
 	public void ExitCredit(){
 		CreditImage.gameObject.SetActive (false);
-	}
+    }
 
 	public void ExitVolume(){
 		VolumeImage.gameObject.SetActive (false);
-	}
+    }
 
 	public void QuitGame(){
 		Application.Quit ();
@@ -71,4 +72,8 @@ public class MenuController : MonoBehaviour {
 	public void PlayGame(){
 		SceneManager.LoadScene (1);
 	}
+    public void PlayGame2()
+    {
+        SceneManager.LoadScene("Scene 2");
+    }
 }
